@@ -9,21 +9,22 @@ async function handleLogin(req, res) {
         if (!response.success) {
             res.status(400).json({
                 status: "error",
-                message: "Login Failed",
-                data: null
+                message: response.message,
+                data: response.data
             });
+            return;
         }
 
         res.status(200).json({
             status: "success",
-            message: "Login Successfull",
-            data: response.token
+            message: response.message,
+            data: response.data
         })
 
     } catch (error) {
-        res.status(400).json({
+        res.status(501).json({
             status: "error",
-            message: "Login Failed",
+            message: "Internal Server Error",
             data: null
         });
     }
@@ -39,24 +40,26 @@ async function handleSignUp(req, res) {
             res.status(400).json({
                 status: "error",
                 message: response.message,
-                data: null
+                data: response.data
             });
+            return;
         }
 
         res.status(200).json({
             status: "success",
             message: response.message,
-            data: null
+            data: response.data
         })
 
     } catch (error) {
-        res.status(400).json({
+        res.status(501).json({
             status: "error",
             message: "Signup Failed",
             data: null
         });
     }
 }
+
 export {
     handleLogin,
     handleSignUp

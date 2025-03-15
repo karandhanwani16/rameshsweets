@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./db/connection.js";
 import authRouter from "./routers/auth.router.js";
+import categoryRouter from "./routers/category.router.js";
 
 // configuration
 dotenv.config();
@@ -20,6 +21,7 @@ connectDB();
 
 
 app.use("/api/auth", authRouter);
+app.use("/api/category", categoryRouter);
 
 // starting the server
 app.listen(PORT, () => {
