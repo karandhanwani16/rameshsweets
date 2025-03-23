@@ -1,4 +1,4 @@
-import { handleLoginService, handleSignupService } from "../services/auth.service.js";
+import { handleGoogleService, handleLoginService, handleSignupService } from "../services/auth.service.js";
 
 async function handleLogin(req, res) {
     try {
@@ -60,7 +60,36 @@ async function handleSignUp(req, res) {
     }
 }
 
+async function handleGoogle(req, res) {
+    try {
+        const { code } = req.body;
+        const response = await handleGoogleService(code);
+
+        if (!response.success) {
+            res.status(400).json({
+                status: "error",
+                message: response.message,
+                data: response.data
+            });
+            return;
+        }
+
+        res.status(200).json({
+            status: "success",
+            message: response.message,
+            data: response.data
+        })
+
+    } catch (error) {
+        res.status(501).json({
+            status: "error",
+            message: error,
+            data: null
+        });
+    }
+}
 export {
     handleLogin,
-    handleSignUp
+    handleSignUp,
+    handleGoogle
 }
